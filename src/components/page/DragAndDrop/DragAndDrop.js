@@ -24,10 +24,14 @@ const DragAndDrop = () => {
     const files = useSelector(state => state.filesManager.files)
     // const [files, addFile] = useState([])
     const [fileError, fileErrorFun] = useState(false)
+    const [fileSizeError,fileSizeErrorUpdate] = useState(false)
     const [loadingState, updateLoading] = useState(false)
 
     const onDrop = useCallback(f => {
         f = f.map(file => {
+            if((file.size * 0.001) >= 10000){
+                fileSizeErrorUpdate(true)
+            }
             if(file.type == 'application/pdf')
                 return file
             else
@@ -81,6 +85,7 @@ const DragAndDrop = () => {
                 </div>
                 <Button text='Upload' callback={upload}/>
             </div>
+            { fileSizeError == true && <h1 className="flex justify-start text-sm text-red-400">File size >10 MB will take a while.</h1> }
             { fileError == true && <h1 className="flex justify-start text-sm text-red-400">pdf files only</h1> }
             {
                 files.length > 0
@@ -97,9 +102,9 @@ const DragAndDrop = () => {
                 files.length == 0
                 &&
                 <div className="md:h-1/5 py-14 mx-2 mt-10 flex flex-col justify-center items-start bg-slate-100 p-5 rounded-md">
-                    <h1 className="text-2xl text-orange-900">Ever wonder how you can get organized with tons of books and articles you have?</h1>
-                    <h1 className="text-xl mt-5 text-orange-900 ">We got your back,</h1>
-                    <h1 className="text-xl text-orange-900">Using Machine Learning Algorithms, we will identify which category each of your items belongs.</h1>
+                    <h1 className="text-2xl text-gray-800">Ever wonder how you can get organized with tons of books and articles you have?</h1>
+                    <h1 className="text-xl mt-5 text-gray-600">We got your back,</h1>
+                    <h1 className="text-xl text-gray-800">Using Machine Learning Algorithms, we will identify which category each of your items belongs.</h1>
                 </div>
             }
             {
