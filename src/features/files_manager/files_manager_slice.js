@@ -56,7 +56,7 @@ export const filesManagerSlice = createSlice({
                     const fileURL = window.URL.createObjectURL(content);
                     let alink = document.createElement('a');
                     alink.href = fileURL;
-                    alink.download = 'SamplePDF.zip';
+                    alink.download = 'Classified Files.zip';
                     alink.click();
                 })
             }

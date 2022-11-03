@@ -5,13 +5,15 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      cursive: 'Dancing Script'
+      cursive: 'Dancing Script',
+      playfair: 'Playfair Display'
     },
     extend: {
       colors: {
         'body': '#FDF6EC',
-        'header': '#fef3e7',
-        'button': '#FFD8A9'
+        'header': '#fae9d1',
+        'button': '#FFD8A9',
+        'footer': '#FFEDDB'
       }
     },
   },

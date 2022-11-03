@@ -73,9 +73,9 @@ const DragAndDrop = () => {
             {
                 files.length == 0
                 &&
-                <div className="w-full m-10 flex flex-col flex-wrap justify-center items-center">
-                    <h1 className="font-bold text-xl">Documents Classifier</h1>
-                    <h1 className="text-sm">Get organised with books and papers.</h1>
+                <div className="w-full m-10 flex flex-col flex-wrap justify-center items-center font-playfair">
+                    <h1 className="font-bold text-2xl">Documents Classifier</h1>
+                    <h1 className="text-sm italic">Get organised with books and papers.</h1>
                 </div>
             }
             <div className="mt-5 flex flex-row justify-center items-center w-full h-20">
@@ -84,13 +84,13 @@ const DragAndDrop = () => {
                     <p>Click or Drop PDF files here </p>
                 </div>
                 <Button text='Upload' callback={upload}/>
-            </div>
+            </div>  
             { fileSizeError == true && <h1 className="flex justify-start text-sm text-red-400">File size >10 MB will take a while.</h1> }
             { fileError == true && <h1 className="flex justify-start text-sm text-red-400">pdf files only</h1> }
             {
                 files.length > 0
                 &&
-                <div className="md:w-1/2 m-10 w-4/5 h-1/2 overflow-y-auto bg-blue-300 opacity-50 rounded">
+                <div className="md:w-1/2 m-10 w-4/5 h-1/2 overflow-y-auto bg-header border-2 opacity-50 rounded">
                 {
                     files.map(file => {
                         return <FileSlot f_name={(file.path).split('.pdf')[0].substring(0, 30) + '.pdf'} f_size={(file.size * 0.001).toFixed(1) + String(' KB')}/>
@@ -101,10 +101,10 @@ const DragAndDrop = () => {
             {
                 files.length == 0
                 &&
-                <div className="md:h-1/5 py-14 mx-2 mt-10 flex flex-col justify-center items-start bg-header border-2 border-black-200 p-5 rounded-md">
-                    <h1 className="text-2xl text-gray-800">Ever wonder how you can get organized with tons of books and articles you have?</h1>
-                    <h1 className="text-xl mt-5 text-gray-600">We got your back,</h1>
-                    <h1 className="text-xl text-gray-800">Using Machine Learning Algorithms, we will identify which category each of your items belongs.</h1>
+                <div className="md:h-1/5 md:py-32 md:w-3/5 mx-2 mt-10 flex flex-col justify-center items-start bg-header border-2 border-black-200 p-5 rounded-md font-playfair">
+                    <h1 className="md:text-4xl text-xl text-gray-800">Ever wonder how you can get organized with tons of books and articles you have?</h1>
+                    <h1 className="md:text-xl text-md mt-5 text-gray-600">We got your back,</h1>
+                    <h1 className="md:text-xl text-md text-gray-800">Using Machine Learning Algorithms, we will identify which category each of your items belongs.</h1>
                 </div>
             }
             {
