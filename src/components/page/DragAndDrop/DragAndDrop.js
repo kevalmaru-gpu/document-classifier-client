@@ -6,7 +6,7 @@ import FileSlot from './FileSlot'
 import Loading from "../../component/Loading";
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
-import { addFiles, saveFiles, updateClasses } from "../../../features/files_manager/files_manager_slice";
+import { updateStatus, addFiles, updateClasses } from "../../../features/files_manager/files_manager_slice";
 
 const DragAndDrop = () => {
     // zip file object
@@ -16,7 +16,7 @@ const DragAndDrop = () => {
     // zip folder related to classes
     const classes = [ zip.folder("Art & Science"), zip.folder("Finance"), zip.folder("Goverment & Politics"), zip.folder("Health"), zip.folder("Science & Technology") ]
 
-    const api_loc = process.env.REACT_APP_SERVER
+    const api_loc =  process.env.REACT_APP_SERVER
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -26,6 +26,7 @@ const DragAndDrop = () => {
     const [fileError, fileErrorFun] = useState(false)
     const [fileSizeError,fileSizeErrorUpdate] = useState(false)
     const [loadingState, updateLoading] = useState(false)
+    const [loadingMsg, updateLoadingMsg] = useState('Please wait...')
 
     const onDrop = useCallback(f => {
         f = f.map(file => {
@@ -43,26 +44,35 @@ const DragAndDrop = () => {
 
     const upload = async () => {
         updateLoading(true)
+        const output = []
+        let i = 1
 
-        const data = new FormData()
-        files.map((d) => {
+        await files.map(async (d) => {
+            const data = new FormData()
             data.append(d.path, d)
-        })
-        await fetch(api_loc + '/predict', {
-            method: 'post',
-            body: data
-        })
-        .then(async res => {
-            if(res.status == '200'){ 
-                const p = await res.json()
-                dispatch(updateClasses(p))
-                updateLoading(false)
-                navigate('/result')
-            }
-            else{
-                updateLoading(false)
-                alert("There is something wrong with the documents...")
-            }
+
+            await fetch(api_loc + '/predict', {
+                method: 'post',
+                body: data
+            })
+            .then(async res => {
+                if(res.status == '200'){ 
+                    const p = await res.json()
+                    output.push(p[0])
+                    dispatch(updateStatus(('Processing ' + String(d.path) + ' ' + String(i) + ' out of ' + String(files.length) + ' remaining')))
+                    i += 1
+                    
+                    if (i > files.length){
+                        dispatch(updateClasses(output))
+                        updateLoading(false)
+                        navigate('/result')
+                    }
+                }
+                else{
+                    updateLoading(false)
+                    alert("There is something wrong with the documents...")
+                }
+            })
         })
     }
     
@@ -110,7 +120,7 @@ const DragAndDrop = () => {
             {
                 loadingState == true
                 &&
-                <Loading />
+                <Loading loadingMsg={loadingMsg}/>
             }
         </>
     )

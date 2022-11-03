@@ -14,13 +14,17 @@ const initialState = {
     classified: false,
     files: [],
     files_classes: [],
-    files_classes_txt: []
+    files_classes_txt: [],
+    status: 'Please Wait'
 }
 
 export const filesManagerSlice = createSlice({
     name: 'filesManagerSlice',
     initialState: initialState,
     reducers: {
+        updateStatus: (state, action) => {
+            state.status = action.payload
+        },
         addFiles: (state, action) => {
             state.files = [...state.files, ...action.payload]
         },
@@ -64,5 +68,5 @@ export const filesManagerSlice = createSlice({
     }
 })
 
-export const { addFiles, saveFiles, updateClasses } = filesManagerSlice.actions
+export const { updateStatus, addFiles, saveFiles, updateClasses } = filesManagerSlice.actions
 export default filesManagerSlice.reducer
