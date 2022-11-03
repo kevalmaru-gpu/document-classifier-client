@@ -7,7 +7,13 @@ module.exports = {
     fontFamily: {
       cursive: 'Dancing Script'
     },
-    extend: {},
+    extend: {
+      colors: {
+        'body': '#FDF6EC',
+        'header': '#fef3e7',
+        'button': '#FFD8A9'
+      }
+    },
   },
   plugins: [],
 }

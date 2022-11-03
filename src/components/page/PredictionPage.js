@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const PredictionPage = () => {
     return(
-        <div className="w-screen h-screen flex flex-col justify-start items-center">
+        <div className="w-screen h-screen bg-body flex flex-col justify-start items-center">
             <Header/>
             <DragAndDrop/>
         </div>
