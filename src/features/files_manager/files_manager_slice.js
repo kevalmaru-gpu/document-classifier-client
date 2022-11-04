@@ -33,16 +33,19 @@ export const filesManagerSlice = createSlice({
             state.files_classes = [...action.payload]
         },
         saveFiles: (state, action) => {
-            const files = current(state.files)
+            const files = current(state.files_classes)
+            const files_class = []
+
             if (state.classified === true){
                 let index = 0
-                files.map(d => { 
-                    classes[parseInt(state.files_classes[index])].file(d.path, d); 
+                files.map(d => {
+                    files_class.push(d.class)
+                    classes[parseInt(d.class)].file(d.file.path, d.file); 
                     index += 1
                 })
                 
                 // removing folders that havent got in use
-                const unique_set = [... new Set(state.files_classes)]
+                const unique_set = [... new Set(files_class)]
                 if(!unique_set.includes('0'))
                     zip.remove(class_list[0])
                 if(!unique_set.includes('1'))

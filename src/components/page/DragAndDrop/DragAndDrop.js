@@ -47,6 +47,8 @@ const DragAndDrop = () => {
         const output = []
         let i = 1
 
+        // manually idenify which book which output from server 
+
         await files.map(async (d) => {
             const data = new FormData()
             data.append(d.path, d)
@@ -58,7 +60,10 @@ const DragAndDrop = () => {
             .then(async res => {
                 if(res.status == '200'){ 
                     const p = await res.json()
-                    output.push(p[0])
+                    output.push({
+                        file: d,
+                        class: p[0]
+                    })
                     dispatch(updateStatus(('Processing ' + String(d.path) + ' ' + String(i) + ' out of ' + String(files.length) + ' remaining')))
                     i += 1
                     
